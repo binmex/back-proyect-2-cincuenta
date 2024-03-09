@@ -24,7 +24,11 @@ const AfiliadoSchema = new Schema({
       type: DisciplineSchema,
       required: true,
     },
-    events: [EventSchema], 
+    results: { 
+      type: ResultSchema,
+      required: true,
+    },
+   
   });
   
   module.exports = mongoose.model("affiliate", AfiliadoSchema);

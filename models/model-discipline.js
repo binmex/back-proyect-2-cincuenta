@@ -18,7 +18,7 @@ const DisciplineSchema = new Schema({
     },
     affiliates: [{
         type: Schema.Types.ObjectId,
-        ref: 'Afiliado',
+        ref: 'affiliate',
     }],
 });
 

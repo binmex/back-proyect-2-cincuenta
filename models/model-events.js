@@ -15,14 +15,11 @@ const EventSchema = new Schema({
         type: Date,
         required: true,
     },
-    result: {
-        type: String,
+        
+    results: { 
+        type: ResultSchema,
         required: true,
-    },
-    affiliate: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Afiliado',
-    }],
+      },
     
 });
 

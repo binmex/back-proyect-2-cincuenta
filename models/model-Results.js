@@ -2,22 +2,24 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ResultSchema = new Schema({
-    result: {
-        type: String,
+    id: {
+        type: Number,
         required: true,
-    },
+        unique: true,
+      },
     puesto: {
         type: String,
         required: true,
     },
-    affiliate: [{
+    affiliates: [{
         type: Schema.Types.ObjectId,
-        ref: 'Afiliado',
+        ref: 'affiliate',
     }],
-    event: [{
+    events: [{
         type: Schema.Types.ObjectId,
-        ref: 'Evento',
+        ref: 'event',
     }],
+    
 });
 
 module.exports = mongoose.model("result", ResultSchema);
