@@ -27,6 +27,25 @@ exports.findById = async (req, res) => {
 exports.save = async (req, res) => {
   try {
     const newEvent = new Event(req.body);
+
+    // Validar que los campos no estén vacíos
+    const requiredFields = ["name", "date"];
+    for (const field of requiredFields) {
+      if (!newEvent[field]) {
+        return res
+          .status(400)
+          .json({ state: false, message: `${field} no puede estar vacío` });
+      }
+    }
+
+    // Validar que la fecha proporcionada sea válida
+    const date = new Date(newEvent.date);
+    if (isNaN(date.getDate())) {
+      return res
+        .status(400)
+        .json({ state: false, message: "La fecha proporcionada no es válida" });
+    }
+
     const data = await newEvent.save();
     return res.status(200).json({ state: true, data: data });
   } catch (error) {
@@ -35,36 +54,54 @@ exports.save = async (req, res) => {
 };
 
 exports.drop = async (req, res) => {
-  const { idEvent } = req.params;
+  const { id } = req.params;
   try {
-    const deletedEvent = await Event.findByIdAndDelete(idEvent);
-    if (!deletedEvent) {
-      return res
-        .status(404)
-        .json({ state: false, message: "Evento no encontrado" });
-    }
-    return res.status(200).json({ state: true, data: deletedEvent });
-  } catch (error) {
-    return res.status(500).json({ state: false, error: error.message });
+    const data = await Event.deleteOne({ _id: id });
+    res.status(200).json({ state: true, data: data });
+  } catch (err) {
+    res.status(500).json({ state: false, error: err.message });
   }
 };
 
 exports.update = async (req, res) => {
-  const { idEvent } = req.params;
-  const { id, name, date, result } = req.body;
-  try {
-    const updatedEvent = await Event.findByIdAndUpdate(
-      idEvent,
-      { id: id, name: name, date: date, result: result },
-      { new: true }
-    );
-    if (!updatedEvent) {
+  const { id } = req.params;
+  const updateInformation = req.body;
+
+  // Validar que no se esté intentando actualizar el id
+  if (updateInformation.id) {
+    return res
+      .status(400)
+      .json({ state: false, message: "No se puede actualizar el campo id" });
+  }
+
+  // Validar que los campos no estén vacíos
+  const requiredFields = ["name", "date"];
+  for (const field of requiredFields) {
+    if (!updateInformation[field]) {
       return res
-        .status(404)
-        .json({ state: false, message: "Evento no encontrado" });
+        .status(400)
+        .json({ state: false, message: `${field} no puede estar vacío` });
     }
-    return res.status(200).json({ state: true, data: updatedEvent });
-  } catch (error) {
-    return res.status(500).json({ state: false, error: error.message });
+  }
+
+  // Validar que la fecha proporcionada sea válida
+  const date = new Date(updateInformation.date);
+  if (isNaN(date.getDate())) {
+    return res
+      .status(400)
+      .json({ state: false, message: "La fecha proporcionada no es válida" });
+  }
+
+  // Eliminar el campo "result" del objeto de actualización si está presente
+  delete updateInformation.result;
+
+  try {
+    const data = await Event.updateOne(
+      { _id: id },
+      { $set: updateInformation }
+    );
+    res.status(200).json({ state: true, data: data });
+  } catch (err) {
+    res.status(500).json({ state: false, error: err.message });
   }
 };

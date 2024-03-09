@@ -4,14 +4,14 @@ const {
   update,
   findAll,
   findById,
-  drop
+  drop,
 } = require("../controllers/eventController");
 //const check = require("../middleware/auth");
 
-routes.get("/",findAll);
-routes.get("/:id",findById);
+routes.get("/", findAll);
+routes.get("/:id", findById);
 routes.post("/", save);
-routes.patch("/:id",update);
-routes.delete("/:id",drop);
+routes.patch("/:id", update);
+routes.delete("/:id", drop);
 
 module.exports = routes;
