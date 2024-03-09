@@ -1,20 +1,24 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const DisciplineSchema = new Schema({
-    name: {
+const ResultSchema = new Schema({
+    
+    result: {
         type: String,
         required: true,
     },
-    type: {
+    puesto: {
         type: String,
-        enum: ['individual', 'grupo'],
         required: true,
     },
-    affiliates: [{
+    affiliate: [{
         type: Schema.Types.ObjectId,
         ref: 'Afiliado',
     }],
+    event: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Evento',
+    }],
 });
 
-module.exports = mongoose.model("discipline", DisciplineSchema);
+module.exports = mongoose.model("results", EventSchema);

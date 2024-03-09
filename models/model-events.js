@@ -18,6 +18,7 @@ const EventSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Afiliado',
     }],
+    
 });
 
-module.exports = mongoose.model("Event", EventSchema);
+module.exports = mongoose.model("event", EventSchema);
