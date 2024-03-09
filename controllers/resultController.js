@@ -1,53 +1,74 @@
-const Result = require("../models/model-results");
+const Result = require("../models/model-Results");
 
-exports.save = async (req, res) => {
-  try {
-    const newResult = new Result(req.body);
-    const data = await newResult.save();
-    res.status(200).json({ state: true, data: data });
-  } catch (err) {
-    res.status(500).json({ state: false, error: err.message });
-  }
-};
+const Afiliado = require("../models/model-affiliate");
+const Evento = require("../models/model-events");
 
 // exports.save = async (req, res) => {
-//   const { afiliadoId, eventoId } = req.body;
-
 //   try {
-    
-//     const afiliado = await Afiliado.findById(afiliadoId);
-//     if (!afiliado) {
-//       return res.status(404).json({ state: false, error: "Afiliado no existe" });
-//     }
-
-    
-//     const evento = await Evento.findById(eventoId);
-//     if (!evento) {
-//       return res.status(404).json({ state: false, error: "Evento no existe" });
-//     }
-
-    
-//     const nuevoResultado = new Resultado(req.body);
-
-    
-//     nuevoResultado.afiliado = afiliado;
-//     nuevoResultado.evento = evento;
-
-//     // Guardar el resultado
-//     const resultadoGuardado = await nuevoResultado.save();
-
-//     // Agregar el resultado al afiliado y al evento
-//     afiliado.resultados.push(nuevoResultado);
-//     await afiliado.save();
-
-//     evento.resultados.push(nuevoResultado);
-//     await evento.save();
-
-//     return res.status(200).json({ state: true, data: resultadoGuardado });
-//   } catch (error) {
-//     return res.status(500).json({ state: false, error: error.message });
+//     const newResult = new Result(req.body);
+//     const data = await newResult.save();
+//     res.status(200).json({ state: true, data: data });
+//   } catch (err) {
+//     res.status(500).json({ state: false, error: err.message });
 //   }
 // };
+
+exports.save = async (req, res) => {
+  // const { afiliadoId, eventoId } = req.body;
+
+  // const  newResult = req.body;
+  // const newResult = new Result(req.body);
+
+  const { events , affiliates} = req.body;
+  const eventoId = events._id;
+  const afiliadoId = affiliates._id;
+
+  // const newResult = new Result(req.body);
+  // const data = await newResult.save();
+
+  try {
+    
+    const afiliado = await Afiliado.findById(afiliadoId);
+    if (!afiliado) {
+      return res.status(404).json({ state: false, error: "Afiliado no existe" });
+    }
+
+   
+    const evento = await Evento.findById(eventoId);
+    if (!evento) {
+      return res.status(404).json({ state: false, error: "Evento no existe" });
+    }
+
+    const existeResultado = await Result.findOne({ affiliates: afiliadoId, events: eventoId });
+
+    // const existeResultado = await Result.findOne({ afiliado: afiliadoId, evento: eventoId });
+    if (existeResultado) {
+      return res.status(400).json({ state: false, error: "Ya existe un resultado para este afiliado y evento" });
+    }
+    console.log("esto",afiliado, evento, afiliadoId, eventoId, "exi", existeResultado)
+
+   
+    const nuevoResultado = new Result(req.body);
+
+    
+    nuevoResultado.afiliado = afiliado;
+    nuevoResultado.evento = evento;
+
+    
+    const resultadoGuardado = await nuevoResultado.save();
+
+   //Agregar el resultado al afiliado y al evento
+    // afiliado.resultados.push(nuevoResultado);
+    // await afiliado.save();
+
+    // evento.resultados.push(nuevoResultado);
+    // await evento.save();
+
+    return res.status(200).json({ state: true, data: resultadoGuardado });
+  } catch (error) {
+    return res.status(500).json({ state: false, error: error.message });
+  }
+};
 
 // exports.save = async (req, res) => {
 //   const { id } = req.params;
