@@ -12,9 +12,10 @@ app.set("PORT", process.env.PORT);
 //middelware (use)
 app.use(cors());
 app.use(express.json());
-app.use("/client", require("./routes/clients"));
-app.use("/reservation", require("./routes/reservations"));
-app.use("/login", require("./routes/login"));
+app.use("/affiliate", require("./routes/affiliate"));
+app.use("/discipline", require("./routes/discipline"));
+app.use("/event", require("./routes/events"));
+app.use("/result", require("./routes/result"));
 app.use("/", (req, res) =>
   res.send("Back del proyecto de creación y consumo de APIs")
 );

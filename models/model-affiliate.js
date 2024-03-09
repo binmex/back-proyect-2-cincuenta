@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const AfiliadoSchema = new Schema({
-  
     id: {
       type: Number,
       required: true,
@@ -21,12 +20,12 @@ const AfiliadoSchema = new Schema({
       required: false,
     },
     discipline: { 
-      type: DisciplineSchema,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "discipline"
     },
-    results: { 
-      type: ResultSchema,
-      required: true,
+    result: { 
+      type: Schema.Types.ObjectId,
+      ref: "result"
     },
    
   });
