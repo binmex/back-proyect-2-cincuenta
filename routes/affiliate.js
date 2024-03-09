@@ -6,7 +6,7 @@ const {
   findId,
   findById,
   deleteAfiliado,
-} = require("../controllers/affileateController");
+} = require("../controllers/affiliateController");
 //const check = require("../middleware/auth");
 
 routes.get("/",findAll);
