@@ -8,7 +8,7 @@ const ResultSchema = new Schema({
     unique: true,
   },
   puesto: {
-    type: String,
+    type: Number,
     required: true,
   },
   affiliates: [
