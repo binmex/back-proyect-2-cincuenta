@@ -33,14 +33,19 @@ exports.findAll = async (req, res) => {
   }
 };
 
+
 exports.findById = async (req, res) => {
   const { id } = req.params;
-  
   try {
-    const data = await Afiliado.find({ id: id });
-    res.status(200).json({ state: true, data: data });
-  } catch (err) {
-    res.status(500).json({ state: false, error: err.message });
+    const event = await Afiliado.findById(id);
+    if (!event) {
+      return res
+        .status(404)
+        .json({ state: false, message: "no encontrado" });
+    }
+    return res.status(200).json({ state: true, data: event });
+  } catch (error) {
+    return res.status(500).json({ state: false, error: error.message });
   }
 };
 

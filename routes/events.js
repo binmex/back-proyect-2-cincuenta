@@ -10,7 +10,7 @@ const {
 
 routes.get("/",findAll);
 routes.get("/:id",findById);
-routes.post("/:id", save);
+routes.post("/", save);
 routes.patch("/:id",update);
 routes.delete("/:id",drop);
 

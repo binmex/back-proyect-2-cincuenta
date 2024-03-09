@@ -26,9 +26,9 @@ exports.findById = async (req, res) => {
 
 exports.save = async (req, res) => {
   try {
-    const event = new Event(req.body);
-
-    return res.status(200).json({ state: true, data: event });
+    const newEvent = new Event(req.body);
+    const data = await newEvent.save();
+    return res.status(200).json({ state: true, data: data });
   } catch (error) {
     return res.status(500).json({ state: false, error: error.message });
   }
