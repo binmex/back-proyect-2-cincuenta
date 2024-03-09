@@ -1,4 +1,4 @@
-const Results = require("../models/model-results");
+const Results = require("../models/model-Results");
 
 exports.save = async (req, res) => {
 

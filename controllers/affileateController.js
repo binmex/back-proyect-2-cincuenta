@@ -1,4 +1,6 @@
-const Affiliate = require("../models/model-affiliate");
+const Afiliado = require("../models/model-affiliate");
+const Results = require("../models/model-Results");
+
 
 exports.save = async (req, res) => {
   try {
@@ -58,11 +60,13 @@ exports.deleteAfiliado = async (req, res) => {
   
   try {
     const data = await Afiliado.deleteOne({ id: id });
+    // const data2 = await Results.deleteMany({ 'result': id });
     res.status(200).json({ state: true, data: data });
   } catch (err) {
     res.status(500).json({ state: false, error: err.message });
   }
 };
+
 
 // const validateEmail = (correo) => {
 //   var expresionRegularCorreo =
