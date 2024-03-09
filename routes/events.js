@@ -3,17 +3,15 @@ const {
   save,
   update,
   findAll,
-  findId,
   findById,
-  deleteClient,
+  drop
 } = require("../controllers/eventController");
 //const check = require("../middleware/auth");
 
 routes.get("/",findAll);
-routes.get("/:id",findId);
-routes.get("/byId/:id",findById);
-routes.post("/", save);
+routes.get("/:id",findById);
+routes.post("/:id", save);
 routes.patch("/:id",update);
-routes.delete("/:id",deleteClient);
+routes.delete("/:id",drop);
 
 module.exports = routes;
