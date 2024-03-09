@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const AfiliadoSchema = new Schema({
+  
     id: {
       type: Number,
       required: true,
