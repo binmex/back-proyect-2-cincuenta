@@ -5,7 +5,7 @@ const {
   findAll,
   findId,
   findById,
-  deleteClient,
+  deleteResult,
 } = require("../controllers/resultController");
 //const check = require("../middleware/auth");
 
@@ -14,6 +14,6 @@ routes.get("/:id",findId);
 routes.get("/byId/:id",findById);
 routes.post("/", save);
 routes.patch("/:id",update);
-routes.delete("/:id",deleteClient);
+routes.delete("/:id",deleteResult);
 
 module.exports = routes;
