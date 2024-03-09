@@ -1,7 +1,4 @@
-const Result = require("../models/model-Results");
-
-const Afiliado = require("../models/model-affiliate");
-const Evento = require("../models/model-events");
+const Result = require("../models/model-results");
 
 exports.save = async (req, res) => {
   try {
