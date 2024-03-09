@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ResultSchema = new Schema({
-    
+    id: {
+        type: Number,
+        required: true,
+        unique: true,
+      },
     result: {
         type: String,
         required: true,
