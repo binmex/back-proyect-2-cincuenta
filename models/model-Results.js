@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ResultSchema = new Schema({
-    
     result: {
         type: String,
         required: true,
@@ -21,4 +20,4 @@ const ResultSchema = new Schema({
     }],
 });
 
-module.exports = mongoose.model("results", EventSchema);
+module.exports = mongoose.model("result", ResultSchema);
