@@ -5,7 +5,7 @@ const {
   findAll,
   findId,
   findById,
-  deleteClient,
+  deleteDiscipline,
 } = require("../controllers/disciplineController");
 //const check = require("../middleware/auth");
 
@@ -14,6 +14,6 @@ routes.get("/:id",findId);
 routes.get("/byId/:id",findById);
 routes.post("/", save);
 routes.patch("/:id",update);
-routes.delete("/:id",deleteClient);
+routes.delete("/:id",deleteDiscipline);
 
 module.exports = routes;
