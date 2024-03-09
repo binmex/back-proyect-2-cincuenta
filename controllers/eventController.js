@@ -1,5 +1,4 @@
 const Event = require("../models/model-events");
-const Result = require("../models/model-Results");
 
 exports.findAll = async (req, res) => {
   try {
@@ -26,26 +25,12 @@ exports.findById = async (req, res) => {
 };
 
 exports.save = async (req, res) => {
-  const { id } = req.params;
-  const result = await Result.findById(id);
-  if (result) {
-    try {
-      const event = new Event(req.body);
+  try {
+    const event = new Event(req.body);
 
-      event.result = result;
-
-      const eventSaved = await event.save();
-
-      result.events.push(event);
-
-      await result.save();
-
-      return res.status(200).json({ state: true, data: eventSaved });
-    } catch (error) {
-      return res.status(500).json({ state: false, error: error.message });
-    }
-  } else {
-    return res.status(404).json({ state: false, error: "Resultado no existe" });
+    return res.status(200).json({ state: true, data: event });
+  } catch (error) {
+    return res.status(500).json({ state: false, error: error.message });
   }
 };
 
