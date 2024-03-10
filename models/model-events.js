@@ -15,11 +15,7 @@ const EventSchema = new Schema({
     type: Date,
     required: true,
   },
-
-  result: {
-    type: Schema.Types.ObjectId,
-    ref: "result",
-  },
+  result: [{ type: Schema.Types.ObjectId, ref: "result" }],
 });
 
 module.exports = mongoose.model("event", EventSchema);

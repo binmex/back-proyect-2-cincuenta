@@ -2,7 +2,7 @@ const Event = require("../models/model-events");
 
 exports.findAll = async (req, res) => {
   try {
-    const events = await Event.find({});
+    const events = await Event.find({}).populate("result");
     return res.status(200).json({ state: true, data: events });
   } catch (error) {
     return res.status(500).json({ state: false, error: error.message });
@@ -12,7 +12,7 @@ exports.findAll = async (req, res) => {
 exports.findById = async (req, res) => {
   const { id } = req.params;
   try {
-    const event = await Event.findById(id);
+    const event = await Event.findById(id).populate("result");
     if (!event) {
       return res
         .status(404)
