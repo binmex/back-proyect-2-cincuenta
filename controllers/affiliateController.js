@@ -1,11 +1,27 @@
 const Afiliado = require("../models/model-affiliate");
 const Results = require("../models/model-Results");
+const Discipline = require("../models/model-discipline");
+
 
 
 exports.save = async (req, res) => {
   try {
+    
+    const { discipline} = req.body;
+    const idDisci = discipline._id
+    
+    const disciplina = await Discipline.findById( idDisci );
+    if (!disciplina) {
+      return res.status(404).json({ state: false, error: "disciplina no existe" });
+    }   
+
     const newAfiliado = new Afiliado(req.body);
     const data = await newAfiliado.save();
+
+    disciplina.affiliates.push(newAfiliado);
+    await disciplina.save();
+
+    
     res.status(200).json({ state: true, data: data });
   } catch (err) {
     res.status(500).json({ state: false, error: err.message });
@@ -73,13 +89,3 @@ exports.deleteAfiliado = async (req, res) => {
   }
 };
 
-
-// const validateEmail = (correo) => {
-//   var expresionRegularCorreo =
-//     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-//   return expresionRegularCorreo.test(correo);
-// };
-// const validateCelPhone = (phone) => {
-//   var phoneExpresion = /^[0-9]{10}$/;
-//   return phoneExpresion.test(phone);
-// };

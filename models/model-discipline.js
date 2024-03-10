@@ -13,7 +13,7 @@ const DisciplineSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ["individual", "grupo"],
+    enum: ["Individual", "Grupal"],
     required: true,
   },
   affiliates: [
