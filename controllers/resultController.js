@@ -63,7 +63,7 @@ exports.update = async (req, res) => {
 
 exports.findAll = async (req, res) => {
   try {
-    const data = await Result.find({});
+    const data = await Result.find({}).populate("affiliates").populate("events");
     res.status(200).json({ state: true, data: data });
   } catch (err) {
     res.status(500).json({ state: false, error: err.message });
@@ -73,7 +73,7 @@ exports.findAll = async (req, res) => {
 exports.findId = async (req, res) => {
     const { id } = req.params;
     try {
-        const event = await Result.findById(id);
+        const event = await Result.findById(id).populate("affiliates").populate("events");
         if (!event) {
         return res
             .status(404)
@@ -82,7 +82,7 @@ exports.findId = async (req, res) => {
         return res.status(200).json({ state: true, data: event });
 
     } catch (err) {
-        return res.status(500).json({ state: false, error: error.message });
+        return res.status(500).json({ state: false, error: err.message });
 
     }
 };
